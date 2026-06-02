@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support – Trace</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #f2ede4; --ink: #12100d; --ink-soft: #3a3630; --ink-muted: #7a7268;
+    --green: #4b6449; --green-soft: #e8eedc; --border: #ddd8cf; --white: #faf8f5;
+  }
+  html { font-size: 16px; scroll-behavior: smooth; }
+  body { background: var(--white); color: var(--ink); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.75; }
+  header { background: var(--cream); border-bottom: 1px solid var(--border); padding: 2.5rem 2rem 2rem; text-align: center; }
+  .logo-mark { display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; text-decoration: none; }
+  .logo-t { font-family: 'Lora', serif; font-size: 1.6rem; font-weight: 400; color: var(--ink); letter-spacing: -0.02em; }
+  .logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); margin-left: -2px; margin-bottom: -6px; }
+  header h1 { font-family: 'Lora', serif; font-size: 1.75rem; font-weight: 400; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+  header p { font-size: 0.875rem; color: var(--ink-muted); }
+  .container { max-width: 720px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+
+  .faq-grid { display: grid; gap: 1rem; margin-bottom: 3rem; }
+
+  details {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  summary {
+    padding: 1.1rem 1.4rem;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    color: var(--ink);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+  }
+
+  summary::-webkit-details-marker { display: none; }
+
+  summary::after {
+    content: '+';
+    font-size: 1.2rem;
+    color: var(--green);
+    font-weight: 300;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+    margin-left: 1rem;
+  }
+
+  details[open] summary::after {
+    transform: rotate(45deg);
+  }
+
+  details[open] summary {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .faq-answer {
+    padding: 1.1rem 1.4rem;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-muted);
+    font-weight: 500;
+    margin-bottom: 1rem;
+    padding-top: 2rem;
+  }
+
+  .contact-section {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  .contact-section h2 {
+    font-family: 'Lora', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+  }
+
+  .contact-section p {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    margin-bottom: 1.5rem;
+    max-width: 440px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .btn {
+    display: inline-block;
+    background: var(--green);
+    color: #fff;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 400;
+    text-decoration: none;
+    border-bottom: none;
+    transition: opacity 0.2s;
+  }
+
+  .btn:hover { opacity: 0.85; border-bottom: none; }
+
+  h2.section-title {
+    font-family: 'Lora', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  a { color: var(--green); text-decoration: none; border-bottom: 1px solid var(--green-soft); }
+  a:hover { border-color: var(--green); }
+
+  footer { background: var(--cream); border-top: 1px solid var(--border); text-align: center; padding: 2rem; font-size: 0.8125rem; color: var(--ink-muted); }
+  footer nav { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  footer nav a { color: var(--ink-muted); border-bottom: none; }
+  footer nav a:hover { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-mark">
+    <span class="logo-t">T</span><span class="logo-dot"></span>
+  </div>
+  <h1>Support</h1>
+  <p>We're here to help. Most answers are below.</p>
+</header>
+
+<div class="container">
+
+  <p class="section-label">Getting started</p>
+
+  <div class="faq-grid">
+
+    <details>
+      <summary>How do I create my first trace?</summary>
+      <div class="faq-answer">Open the app and tap the compose button on the Today screen. You can write a few lines about your day, select a mood, and optionally attach a photo. Tap Save when you're done. That's your first trace.</div>
+    </details>
+
+    <details>
+      <summary>Do I need to create an account?</summary>
+      <div class="faq-answer">No. Trace has no accounts, no sign-up, and no login. Just download and start writing. Your data stays on your device — we never see it.</div>
+    </details>
+
+    <details>
+      <summary>Is Trace really private?</summary>
+      <div class="faq-answer">Yes. Trace is built local-first: all your entries, photos, and mood data are stored only on your iPhone. There is no server, no cloud sync, and no account. Nothing leaves your device.</div>
+    </details>
+
+    <details>
+      <summary>How do I set up reminders?</summary>
+      <div class="faq-answer">Go to your Profile tab and tap Reminders. You can set a daily reminder, a weekly reflection prompt, or both. The app will ask for notification permission the first time you set a reminder — you'll need to allow it in iOS Settings if you declined initially.</div>
+    </details>
+
+  </div>
+
+  <p class="section-label">Your data</p>
+
+  <div class="faq-grid">
+
+    <details>
+      <summary>Can I back up my journal entries?</summary>
+      <div class="faq-answer">Currently, Trace stores data locally using iOS's app sandbox. A dedicated export feature is on the roadmap for a future version. In the meantime, keeping your iPhone backed up via iCloud or iTunes will preserve your app data as part of the full device backup.</div>
+    </details>
+
+    <details>
+      <summary>What happens if I delete the app?</summary>
+      <div class="faq-answer">Deleting Trace from your iPhone will permanently remove all your entries, photos, and preferences stored by the app. This cannot be undone. If you want to keep your data, please back up your device before deleting.</div>
+    </details>
+
+    <details>
+      <summary>Can I transfer my data to a new phone?</summary>
+      <div class="faq-answer">Yes, if you restore your new iPhone from an iCloud or iTunes backup that includes Trace, your data should be preserved as part of the app's local storage. Transferring via iPhone-to-iPhone migration (Quick Start) also works.</div>
+    </details>
+
+    <details>
+      <summary>Does Trace sync across my devices?</summary>
+      <div class="faq-answer">Not in the current version. Trace is designed as a single-device, local-first app. Multi-device sync is a feature we're considering for a future release.</div>
+    </details>
+
+  </div>
+
+  <p class="section-label">Features</p>
+
+  <div class="faq-grid">
+
+    <details>
+      <summary>What is the Journey view?</summary>
+      <div class="faq-answer">Journey is your visual memory map. It displays your traces as mood-linked bubbles arranged over time, letting you see emotional patterns at a glance. It's meant for reflection, not productivity — just a calm way to observe your days.</div>
+    </details>
+
+    <details>
+      <summary>How does the Insights feature work?</summary>
+      <div class="faq-answer">Insights reads through your recent journal entries — entirely on your device — and generates observations about recurring themes, mood tendencies, and patterns. No AI or external service is used. The reflection engine runs locally.</div>
+    </details>
+
+    <details>
+      <summary>What is "Listen to Reflection"?</summary>
+      <div class="faq-answer">This feature reads your journal reflection aloud using your iPhone's built-in text-to-speech. You can listen to a calm narration of your week's themes without looking at a screen. All speech synthesis happens on-device — your text is never sent anywhere.</div>
+    </details>
+
+    <details>
+      <summary>Will there be voice notes?</summary>
+      <div class="faq-answer">Yes — voice notes are planned for Trace v1.1. The feature will let you record, play back, and save audio notes to your entries, all stored locally. No transcription or cloud processing will be involved.</div>
+    </details>
+
+  </div>
+
+  <p class="section-label">Troubleshooting</p>
+
+  <div class="faq-grid">
+
+    <details>
+      <summary>Notifications aren't arriving</summary>
+      <div class="faq-answer">First, check that notifications are enabled in iPhone Settings → Notifications → Trace. Make sure "Allow Notifications" is on and your preferred alert style is selected. Also check your Focus/Do Not Disturb settings — these can silence app notifications. Then open Trace, go to Profile → Reminders, and confirm your reminder is still scheduled.</div>
+    </details>
+
+    <details>
+      <summary>The app feels slow or crashes</summary>
+      <div class="faq-answer">Try closing and reopening the app. If the issue persists, restart your iPhone. If you continue to experience crashes, please contact us with your device model and iOS version so we can investigate.</div>
+    </details>
+
+    <details>
+      <summary>I accidentally deleted an entry</summary>
+      <div class="faq-answer">Unfortunately, deleted entries cannot be recovered. Because Trace stores data locally with no cloud backup, deletions are permanent. We recommend being deliberate when using the delete option in Entry Detail.</div>
+    </details>
+
+    <details>
+      <summary>Photos aren't attaching correctly</summary>
+      <div class="faq-answer">Make sure Trace has permission to access your photos. Go to iPhone Settings → Privacy & Security → Photos → Trace and select "Full Access" or "Add Photos Only." Then try attaching the photo again.</div>
+    </details>
+
+  </div>
+
+  <div class="contact-section">
+    <h2>Still need help?</h2>
+    <p>If you didn't find your answer above, send us a message. We read every email and try to respond within a few days.</p>
+    <a href="mailto:support@trace.app" class="btn">Email support</a>
+    <p style="margin-top: 1.25rem; font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 0;">
+      <a href="privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="terms-of-use.html">Terms of Use</a>
+    </p>
+  </div>
+
+</div>
+
+<footer>
+  <nav>
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="terms-of-use.html">Terms of Use</a>
+    <a href="support.html">Support</a>
+  </nav>
+  <p>© 2026 Trace. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
