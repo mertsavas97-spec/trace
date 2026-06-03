@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trace – Daily Journal & Mood</title>
+<meta name="description" content="Trace helps you remember small moments. Write a little. Track how you feel. See patterns emerge. Private by design — everything stays on your phone.">
+<meta property="og:title" content="Trace – Daily Journal & Mood">
+<meta property="og:description" content="Remember small moments. Private, calm, and yours alone.">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream:      #f2ede4;
+  --cream-deep: #e8e0d3;
+  --ink:        #12100d;
+  --ink-soft:   #3a3630;
+  --ink-muted:  #7a7268;
+  --green:      #4b6449;
+  --green-light:#6b8f69;
+  --green-soft: #e8eedc;
+  --rust:       #a0533a;
+  --sand:       #c9b89a;
+  --border:     #ddd8cf;
+  --white:      #faf8f5;
+}
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  background: var(--white);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 2.5rem;
+  background: rgba(250,248,245,0.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(221,216,207,0.6);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  text-decoration: none;
+}
+
+.nav-logo-t {
+  font-family: 'Lora', serif;
+  font-size: 1.4rem;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+
+.nav-logo-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  margin-bottom: -1px;
+  margin-left: 1px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-links a {
+  font-size: 0.8125rem;
+  color: var(--ink-muted);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--ink); }
+
+.nav-cta {
+  background: var(--ink) !important;
+  color: var(--white) !important;
+  padding: 0.5rem 1.25rem;
+  border-radius: 100px;
+  font-size: 0.8125rem !important;
+  transition: opacity 0.2s !important;
+}
+
+.nav-cta:hover { opacity: 0.75; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 0;
+  padding-top: 5rem;
+}
+
+.hero-left {
+  padding: 6rem 4rem 6rem 5rem;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--green-soft);
+  color: var(--green);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.9rem;
+  border-radius: 100px;
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+.hero-headline {
+  font-family: 'Lora', serif;
+  font-size: clamp(2.5rem, 4vw, 3.75rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+
+.hero-headline em {
+  font-style: italic;
+  color: var(--green);
+}
+
+.hero-sub {
+  font-size: 1.0625rem;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  max-width: 420px;
+  margin-bottom: 2.5rem;
+  font-weight: 300;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--ink);
+  color: var(--white);
+  padding: 0.875rem 1.75rem;
+  border-radius: 100px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  font-weight: 400;
+  transition: opacity 0.2s;
+  letter-spacing: 0.01em;
+}
+
+.btn-primary:hover { opacity: 0.8; }
+
+.btn-primary svg { width: 16px; height: 16px; }
+
+.btn-ghost {
+  font-size: 0.875rem;
+  color: var(--ink-muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.btn-ghost:hover { color: var(--ink); border-color: var(--ink); }
+
+.hero-note {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+}
+
+.hero-note::before {
+  content: '';
+  width: 16px;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── HERO RIGHT — MOCKUP ── */
+.hero-right {
+  background: var(--cream);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-right::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  right: -20%;
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(75,100,73,0.08) 0%, transparent 70%);
+}
+
+.phone-mockup {
+  width: 220px;
+  height: 440px;
+  background: var(--white);
+  border-radius: 36px;
+  box-shadow:
+    0 0 0 1px rgba(18,16,13,0.08),
+    0 32px 80px rgba(18,16,13,0.15),
+    0 8px 24px rgba(18,16,13,0.08);
+  position: relative;
+  overflow: hidden;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(-1deg); }
+  50% { transform: translateY(-12px) rotate(-1deg); }
+}
+
+.phone-notch {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 6px;
+  background: var(--cream-deep);
+  border-radius: 3px;
+  z-index: 2;
+}
+
+.phone-screen {
+  padding: 32px 16px 16px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.screen-date {
+  font-size: 9px;
+  color: var(--ink-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.screen-greeting {
+  font-family: 'Lora', serif;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.screen-card {
+  background: var(--cream);
+  border-radius: 14px;
+  padding: 12px;
+  flex: 1;
+}
+
+.screen-card-label {
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-muted);
+  margin-bottom: 6px;
+}
+
+.screen-card-text {
+  font-size: 9.5px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.screen-mood-row {
+  display: flex;
+  gap: 6px;
+}
+
+.screen-mood {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  background: var(--cream);
+}
+
+.screen-mood.active {
+  background: var(--green-soft);
+  box-shadow: 0 0 0 2px var(--green);
+}
+
+.screen-save {
+  background: var(--ink);
+  color: var(--white);
+  border-radius: 10px;
+  padding: 8px;
+  text-align: center;
+  font-size: 9px;
+  letter-spacing: 0.05em;
+  font-weight: 400;
+}
+
+/* Floating card behind phone */
+.float-card {
+  position: absolute;
+  background: var(--white);
+  border-radius: 14px;
+  padding: 12px 16px;
+  box-shadow: 0 8px 32px rgba(18,16,13,0.1);
+  font-size: 0.75rem;
+}
+
+.float-card-1 {
+  left: 8%;
+  top: 22%;
+  animation: float2 7s ease-in-out infinite;
+}
+
+.float-card-2 {
+  right: 6%;
+  bottom: 28%;
+  animation: float2 8s ease-in-out infinite 1s;
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.float-card-label {
+  font-size: 0.65rem;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+
+.float-card-value {
+  font-family: 'Lora', serif;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.mood-dots {
+  display: flex;
+  gap: 3px;
+  margin-top: 4px;
+}
+
+.mood-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+/* ── FEATURES ── */
+.section {
+  padding: 6rem 5rem;
+}
+
+.section-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--green);
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-family: 'Lora', serif;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  max-width: 560px;
+  margin-bottom: 4rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.feature-card {
+  background: var(--white);
+  padding: 2.5rem 2rem;
+  transition: background 0.2s;
+}
+
+.feature-card:hover { background: var(--cream); }
+
+.feature-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--green-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  font-size: 1.1rem;
+}
+
+.feature-name {
+  font-family: 'Lora', serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.01em;
+}
+
+.feature-desc {
+  font-size: 0.875rem;
+  color: var(--ink-muted);
+  line-height: 1.65;
+}
+
+/* ── PHILOSOPHY ── */
+.philosophy {
+  background: var(--ink);
+  color: var(--white);
+  padding: 7rem 5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.philosophy-quote {
+  font-family: 'Lora', serif;
+  font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: -0.025em;
+  color: var(--white);
+}
+
+.philosophy-quote em {
+  color: var(--sand);
+  font-style: italic;
+}
+
+.philosophy-right p {
+  font-size: 0.9375rem;
+  color: rgba(250,248,245,0.6);
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+
+.philosophy-right p:last-child { margin-bottom: 0; }
+
+/* ── PRIVACY ── */
+.privacy-section {
+  background: var(--cream);
+  padding: 6rem 5rem;
+}
+
+.privacy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.privacy-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.privacy-item-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.privacy-item-title {
+  font-family: 'Lora', serif;
+  font-size: 1rem;
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.privacy-item-desc {
+  font-size: 0.875rem;
+  color: var(--ink-muted);
+  line-height: 1.65;
+}
+
+/* ── CTA ── */
+.cta-section {
+  padding: 7rem 5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--green-soft) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cta-title {
+  font-family: 'Lora', serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.cta-sub {
+  font-size: 1rem;
+  color: var(--ink-muted);
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.cta-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  position: relative;
+}
+
+.store-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--ink);
+  color: var(--white);
+  padding: 0.875rem 1.5rem;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.store-badge:hover { opacity: 0.8; }
+
+.store-badge-text { text-align: left; }
+
+.store-badge-sub {
+  font-size: 0.6rem;
+  opacity: 0.6;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: block;
+  margin-bottom: 1px;
+}
+
+.store-badge-name {
+  font-size: 0.9rem;
+  font-weight: 400;
+  display: block;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--cream);
+  border-top: 1px solid var(--border);
+  padding: 2rem 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  text-decoration: none;
+}
+
+.footer-links {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  font-size: 0.8125rem;
+  color: var(--ink-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--ink); }
+
+.footer-copy {
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { gap: 1rem; }
+
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .hero-left { padding: 7rem 2rem 3rem; }
+
+  .hero-right {
+    height: 60vw;
+    min-height: 320px;
+  }
+
+  .section, .privacy-section, .cta-section { padding: 4rem 2rem; }
+
+  .features-grid { grid-template-columns: 1fr; }
+
+  .philosophy {
+    grid-template-columns: 1fr;
+    padding: 4rem 2rem;
+    gap: 2.5rem;
+  }
+
+  .privacy-grid { grid-template-columns: 1fr; gap: 2rem; }
+
+  footer { padding: 2rem; flex-direction: column; align-items: flex-start; }
+
+  .float-card-1, .float-card-2 { display: none; }
+}
+
+/* ── ANIMATIONS ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: fadeUp 0.7s ease forwards;
+}
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-eyebrow { animation-delay: 0.1s; }
+.hero-headline { animation-delay: 0.2s; }
+.hero-sub { animation-delay: 0.3s; }
+.hero-actions { animation-delay: 0.4s; }
+.hero-note { animation-delay: 0.5s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">
+    <span class="nav-logo-t">T</span><span class="nav-logo-dot"></span>
+  </a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#privacy">Privacy</a>
+    <a href="trace-support.html">Support</a>
+    <a href="#download" class="nav-cta">Download</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow fade-up">For iPhone · Free to download</div>
+    <h1 class="hero-headline fade-up">
+      Remember<br><em>small moments.</em>
+    </h1>
+    <p class="hero-sub fade-up">
+      Write a little. Track how you feel. Watch patterns emerge over time. Trace is a calm journaling app — private by design, yours alone.
+    </p>
+    <div class="hero-actions fade-up">
+      <a href="#download" class="btn-primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 18V6m0 12l-4-4m4 4l4-4"/><path d="M5 20h14"/></svg>
+        Download on App Store
+      </a>
+      <a href="#features" class="btn-ghost">See how it works</a>
+    </div>
+    <p class="hero-note fade-up">No account required. No cloud. No ads.</p>
+  </div>
+
+  <div class="hero-right">
+
+    <!-- floating stat cards -->
+    <div class="float-card float-card-1">
+      <div class="float-card-label">This week</div>
+      <div class="float-card-value">7 traces</div>
+      <div class="mood-dots">
+        <div class="mood-dot" style="background:#4b6449"></div>
+        <div class="mood-dot" style="background:#4b6449"></div>
+        <div class="mood-dot" style="background:#a0533a"></div>
+        <div class="mood-dot" style="background:#4b6449"></div>
+        <div class="mood-dot" style="background:#c9b89a"></div>
+        <div class="mood-dot" style="background:#4b6449"></div>
+        <div class="mood-dot" style="background:#4b6449"></div>
+      </div>
+    </div>
+
+    <div class="float-card float-card-2">
+      <div class="float-card-label">Insight</div>
+      <div style="font-size: 0.8rem; color: #3a3630; line-height: 1.4; max-width: 130px;">You feel best on<br><strong>Tuesday mornings.</strong></div>
+    </div>
+
+    <!-- phone -->
+    <div class="phone-mockup">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="screen-date">Wednesday, Jun 3</div>
+        <div class="screen-greeting">How was<br>your day?</div>
+        <div class="screen-card">
+          <div class="screen-card-label">Today's trace</div>
+          <div class="screen-card-text">Went for a walk before the meeting. The light was perfect and I felt surprisingly clear-headed all afternoon.</div>
+        </div>
+        <div class="screen-mood-row">
+          <div class="screen-mood">😌</div>
+          <div class="screen-mood active">🌿</div>
+          <div class="screen-mood">😐</div>
+          <div class="screen-mood">🌧</div>
+          <div class="screen-mood">✨</div>
+        </div>
+        <div class="screen-save">Save trace</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="section-label">What's inside</div>
+  <h2 class="section-title">Everything you need to reflect. Nothing you don't.</h2>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">✏️</div>
+      <div class="feature-name">Daily Journal</div>
+      <p class="feature-desc">A calm space to write a few lines about your day. No blank page pressure — just open and start.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌿</div>
+      <div class="feature-name">Mood Tracking</div>
+      <p class="feature-desc">Log how you feel with a single tap. Over time, your mood history tells a story only you can read.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📷</div>
+      <div class="feature-name">Photo Memories</div>
+      <p class="feature-desc">Attach a photo to any trace. A single image can hold more than a hundred words.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🗺</div>
+      <div class="feature-name">Journey View</div>
+      <p class="feature-desc">Your entries appear as mood-linked bubbles across time. Patterns you never noticed begin to surface.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💡</div>
+      <div class="feature-name">Reflection Insights</div>
+      <p class="feature-desc">Trace reads between the lines of your entries and surfaces gentle, meaningful observations.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎧</div>
+      <div class="feature-name">Listen to Reflection</div>
+      <p class="feature-desc">Sit back and hear your week read back to you. A calm narration, no screen required.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy">
+  <div class="philosophy-quote">
+    "Not every day needs to be <em>productive.</em> Some just need to be remembered."
+  </div>
+  <div class="philosophy-right">
+    <p>Trace was built for people who want to slow down — not optimize. There are no streaks, no badges, no social feeds.</p>
+    <p>Just a quiet place to check in with yourself. Write a little. See how you felt last Tuesday. Notice the small things that keep coming back.</p>
+    <p>That's the whole idea.</p>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section class="privacy-section" id="privacy">
+  <div class="section-label">Privacy</div>
+  <h2 class="section-title">Your thoughts belong to you.</h2>
+
+  <div class="privacy-grid">
+    <div class="privacy-item">
+      <div class="privacy-item-icon">📵</div>
+      <div class="privacy-item-title">No account required</div>
+      <p class="privacy-item-desc">Download and start writing. No email, no password, no sign-up. Trace doesn't know who you are.</p>
+    </div>
+    <div class="privacy-item">
+      <div class="privacy-item-icon">📲</div>
+      <div class="privacy-item-title">Stored on your device</div>
+      <p class="privacy-item-desc">All your entries, photos, and mood data live on your iPhone. There is no server. Nothing leaves your phone.</p>
+    </div>
+    <div class="privacy-item">
+      <div class="privacy-item-icon">🚫</div>
+      <div class="privacy-item-title">No ads, ever</div>
+      <p class="privacy-item-desc">We don't sell your data, run ads, or share anything with third parties. There's nothing to share.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="download">
+  <h2 class="cta-title">Start your first trace today.</h2>
+  <p class="cta-sub">Free to download. Private by design.</p>
+  <div class="cta-actions">
+    <a href="#" class="store-badge">
+      <svg width="20" height="24" viewBox="0 0 814 1000" fill="currentColor"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 420.4 8.1 304.5 8.1 194.7c0-147.8 97.8-226.6 193.7-226.6 64 0 117.3 42.5 157.2 42.5 37.9 0 97.6-45.3 169.4-45.3 26.5 0 109.3 2.6 162.4 95.4zm-225.1-209.1c28.5-35.9 50.1-85.5 50.1-135.1 0-6.5-.6-13.1-1.9-18.4-47.7 1.9-104.6 31.8-138.4 71.9-26.5 30.9-50.9 80.5-50.9 130.8 0 7.1 1.3 14.2 1.9 16.5 3.2.6 8.4 1.3 13.6 1.3 43.1 0 97.1-28.5 125.6-66z"/></svg>
+      <div class="store-badge-text">
+        <span class="store-badge-sub">Download on the</span>
+        <span class="store-badge-name">App Store</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="/" class="footer-logo">
+    <span class="nav-logo-t">T</span><span class="nav-logo-dot"></span>
+  </a>
+  <div class="footer-links">
+    <a href="trace-privacy-policy.html">Privacy Policy</a>
+    <a href="trace-terms-of-use.html">Terms of Use</a>
+    <a href="trace-support.html">Support</a>
+  </div>
+  <div class="footer-copy">© 2026 Trace. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
